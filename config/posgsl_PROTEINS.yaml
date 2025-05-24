@@ -1,0 +1,90 @@
+use_label: false
+use_select: false
+#mode: pretrain
+use_deterministic: true
+load: false
+save: false
+use_gate: true   
+use_residual: true   
+recover_full_adj: false   
+version: 0 
+
+dataset:
+  split: random
+#  n_splits: 1
+  cv: 10
+  stratified: false
+
+parsing_module:
+  parsing: metis_parse
+  parsing_params:
+#    max_n_sub: 2
+#    max_sub_size: 10
+    n_sub: 2
+  reparsing: false
+
+use_seperate_encoder: true
+backbone:
+  n_layers: 3
+  n_hidden: 128
+  dropout: 0.5
+  norm:
+    flag: true
+    norm_type: GraphNorm
+  pool: mean
+  jk: ~
+  output_layer: true
+  n_layers_output: 2
+  backbone: gcn
+  residual: true
+
+use_gsl: true
+gsl_module:
+  conf_encoder:
+    type: mlp
+    n_layers: 2
+    n_hidden: 128
+    n_class: 128
+    dropout: 0.5
+    norm:
+      flag: true
+      norm_type: BatchNorm
+    pool: mean
+    jk: ~
+    output_layer: false
+    n_layers_output: 2
+    backbone: gcn
+  conf_metric:
+    weighted: true
+  epsilon: 0.8
+  lamb: 0.1
+  gsl_one_by_one: false
+
+use_motif: true
+motif:
+  n_motif_per_class: 1
+  sim_type: euclidean_2
+  update_type: kmeans
+  k1: 0.4
+  tau: 0.9
+  weighted_mean: false
+
+
+training:
+  device: cuda
+  lr: 1e-2
+  n_epochs: 100
+  weight_decay: 5e-6
+  patience: 50
+  criterion: loss
+  batch_size: 64
+  test_batch_size: 64
+  metric: acc
+  n_pretrain: 100
+  n_motif_update_min: 10
+  n_motif_update_each: 5
+  lambda: 0.05
+
+
+
+
