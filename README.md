@@ -1,4 +1,4 @@
-This is the code of paper "Prototypical Subgraph Structure Learning for Graph Classification" submitted to CIKM-25.
+This is the code of paper "Prototypical Subgraph Structure Learning for Graph Classification" submitted to Neural Networks.
 
 
 
